@@ -2,7 +2,21 @@ const prisma = require('../db/db')
 
 class PieceDao {
   async getAllPieces() {
-    return await prisma.piece.findMany()
+    const query = {
+      include: {
+        Modele: {
+          select: {
+            nom: true,
+            marque: {
+              select: {
+                nom: true,
+              },
+            },
+          },
+        },
+      },
+    }
+    return await prisma.piece.findMany(query)
   }
   async createPieces(pieces) {
     return await prisma.piece.createMany({ data: pieces })

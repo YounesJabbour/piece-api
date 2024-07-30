@@ -5,7 +5,7 @@ const PieceService = require('../service/Piece-service')
 // create a new instance of PieceService
 const pieceService = new PieceService()
 
-const getAllPieces = async (req, res) => {
+const getAllPieces = async (req, res, next) => {
   try {
     const pieces = await pieceService.getAllPieces()
     if (!pieces) {
@@ -17,7 +17,7 @@ const getAllPieces = async (req, res) => {
   }
 }
 
-const createPieces = async (req, res) => {
+const createPieces = async (req, res, next) => {
   try {
     const pieces = req.body
     const createdPieces = await pieceService.createPieces(pieces)
@@ -27,7 +27,7 @@ const createPieces = async (req, res) => {
   }
 }
 
-const deletePieces = async (req, res) => {
+const deletePieces = async (req, res, next) => {
   try {
     await pieceService.deleteAll()
     res.status(StatusCodes.NO_CONTENT).send()
