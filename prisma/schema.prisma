@@ -58,6 +58,11 @@ model CommandePiece {
   @@id([pieceId, commandeId])
 }
 
+model Operation {
+  id    Int     @id @default(autoincrement())
+  titre String?
+}
+
 enum Statut {
   EN_ATTENTE
   EN_COURS
