@@ -28,7 +28,7 @@ app.use(express.static(path.join(__dirname, 'public')))
 app.use(errorHandler)
 
 const corsOptions = {
-  origin: '*',
+  origin: 'http://localhost:3000',
   credentials: true,
   methods: ['POST', 'GET', 'PUT', 'DELETE'],
 }
