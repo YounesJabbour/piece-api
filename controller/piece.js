@@ -36,8 +36,22 @@ const deletePieces = async (req, res, next) => {
   }
 }
 
+const getAllPiecesByModel = async (req, res, next) => {
+  try {
+    const id = parseInt(req.params.id)
+    const pieces = await pieceService.getPiecesByModelId(id)
+    if (!pieces) {
+      throw new ApplicationError(ReasonPhrases.NOT_FOUND, StatusCodes.NOT_FOUND)
+    }
+    res.status(StatusCodes.OK).json(pieces)
+  } catch (error) {
+    next(error)
+  }
+}
+
 module.exports = {
   getAllPieces,
   createPieces,
   deletePieces,
+  getAllPiecesByModel,
 }

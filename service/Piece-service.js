@@ -5,6 +5,10 @@ class PieceService {
     this.pieceDao = new PieceDao()
   }
 
+  async getPiecesByModelId(id) {
+    return await this.pieceDao.getPiecesByModelId(id)
+  }
+
   async getAllPieces() {
     return await this.pieceDao.getAllPieces()
   }

@@ -29,10 +29,23 @@ const createModels = async (req, res, next) => {
   }
 }
 
-const deleteModels = async (req, res) => {
+const deleteModels = async (req, res, next) => {
   try {
     await modelService.deleteAll()
     res.status(StatusCodes.NO_CONTENT).send()
+  } catch (error) {
+    next(error)
+  }
+}
+
+const getModelsByMarqueId = async (req, res, next) => {
+  try {
+    const id = parseInt(req.params.id)
+    const models = await modelService.getModelsByMarqueId(id)
+    if (!models)
+      throw new ApplicationError(ReasonPhrases.NOT_FOUND, StatusCodes.NOT_FOUND)
+
+    res.status(StatusCodes.OK).json(models)
   } catch (error) {
     next(error)
   }
@@ -42,4 +55,5 @@ module.exports = {
   getAllModels,
   createModels,
   deleteModels,
+  getModelsByMarqueId,
 }

@@ -18,6 +18,14 @@ class PieceDao {
     }
     return await prisma.piece.findMany(query)
   }
+
+  async getPiecesByModelId(id) {
+    return await prisma.piece.findMany({
+      where: {
+        modeleId: id,
+      },
+    })
+  }
   async createPieces(pieces) {
     return await prisma.piece.createMany({ data: pieces })
   }

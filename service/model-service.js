@@ -5,6 +5,10 @@ class ModelService {
     this.modelDao = new ModelDao()
   }
 
+  async getModelsByMarqueId(id) {
+    return await this.modelDao.getModelsByMarqueId(id)
+  }
+
   async getAllModels() {
     return await this.modelDao.getAllModels()
   }
