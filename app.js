@@ -25,7 +25,6 @@ app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
 app.use(cookieParser())
 app.use(express.static(path.join(__dirname, 'public')))
-app.use(errorHandler)
 
 const corsOptions = {
   origin: 'http://localhost:3000',
@@ -42,6 +41,7 @@ app.use('/commande', commandeRouter)
 app.use('/marque', marqueRouter)
 app.use('/model', modelRouter)
 app.use('/operation', operationRouter)
+app.use(errorHandler)
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

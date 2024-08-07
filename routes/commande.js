@@ -1,9 +1,8 @@
 var express = require('express')
 var router = express.Router()
+const { createCommande, getCommandes } = require('../controller/commande')
 
-/* GET home page. */
-router.get('/', function (req, res, next) {
-  res.status(200).json({ message: 'Welcome to the API' })
-})
+router.post('/create', createCommande)
+router.get('/', getCommandes)
 
 module.exports = router
