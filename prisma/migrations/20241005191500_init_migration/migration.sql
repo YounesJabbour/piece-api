@@ -4,7 +4,7 @@ CREATE TYPE "Statut" AS ENUM ('EN_ATTENTE', 'EN_COURS', 'LIVREE');
 -- CreateTable
 CREATE TABLE "marque" (
     "id" SERIAL NOT NULL,
-    "nom" TEXT NOT NULL,
+    "nom" TEXT,
 
     CONSTRAINT "marque_pkey" PRIMARY KEY ("id")
 );
@@ -12,8 +12,8 @@ CREATE TABLE "marque" (
 -- CreateTable
 CREATE TABLE "Modele" (
     "id" SERIAL NOT NULL,
-    "nom" TEXT NOT NULL,
-    "marqueId" INTEGER NOT NULL,
+    "nom" TEXT,
+    "marqueId" INTEGER,
 
     CONSTRAINT "Modele_pkey" PRIMARY KEY ("id")
 );
@@ -33,10 +33,12 @@ CREATE TABLE "Piece" (
 -- CreateTable
 CREATE TABLE "Commande" (
     "id" SERIAL NOT NULL,
+    "firstAccordDate" TIMESTAMP(3),
+    "secondAccordDate" TIMESTAMP(3),
     "dateCommande" TIMESTAMP(3) DEFAULT CURRENT_TIMESTAMP,
     "dateLivraison" TIMESTAMP(3),
     "commentaire" TEXT,
-    "statut" "Statut" NOT NULL DEFAULT 'EN_ATTENTE',
+    "statut" "Statut" DEFAULT 'EN_ATTENTE',
 
     CONSTRAINT "Commande_pkey" PRIMARY KEY ("id")
 );
@@ -50,11 +52,19 @@ CREATE TABLE "CommandePiece" (
     CONSTRAINT "CommandePiece_pkey" PRIMARY KEY ("pieceId","commandeId")
 );
 
+-- CreateTable
+CREATE TABLE "Operation" (
+    "id" SERIAL NOT NULL,
+    "titre" TEXT,
+
+    CONSTRAINT "Operation_pkey" PRIMARY KEY ("id")
+);
+
 -- CreateIndex
 CREATE UNIQUE INDEX "Piece_reference_key" ON "Piece"("reference");
 
 -- AddForeignKey
-ALTER TABLE "Modele" ADD CONSTRAINT "Modele_marqueId_fkey" FOREIGN KEY ("marqueId") REFERENCES "marque"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "Modele" ADD CONSTRAINT "Modele_marqueId_fkey" FOREIGN KEY ("marqueId") REFERENCES "marque"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "Piece" ADD CONSTRAINT "Piece_modeleId_fkey" FOREIGN KEY ("modeleId") REFERENCES "Modele"("id") ON DELETE SET NULL ON UPDATE CASCADE;
